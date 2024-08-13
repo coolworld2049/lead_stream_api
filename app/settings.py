@@ -34,12 +34,16 @@ class Settings(BaseSettings):
     def db_url(self):
         return f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_DATABASE}"
 
-    @field_validator("API_KEYS", )
+    @field_validator(
+        "API_KEYS",
+    )
     def validate_api_keys(cls, api_keys):
         min_length = 32
         for key in api_keys:
             if len(key) < min_length:
-                raise ValueError(f"API key '{key}' is shorter than the minimum length of {min_length} characters.")
+                raise ValueError(
+                    f"API key '{key}' is shorter than the minimum length of {min_length} characters."
+                )
         return api_keys
 
 

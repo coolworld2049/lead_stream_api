@@ -3,17 +3,40 @@ from prisma import models
 from starlette import status
 from starlette.responses import JSONResponse
 
+from app import schemas
 from app.api.deps import api_key_auth
 from app.settings import prisma
 
-router = APIRouter(prefix="/leads", tags=["Leads"], dependencies=[Depends(api_key_auth)])
+router = APIRouter(
+    prefix="/leads", tags=["Leads"], dependencies=[Depends(api_key_auth)]
+)
 
 
 @router.post("/", response_model=models.Lead)
 async def create_lead(
-    lead: models.Lead,
+    lead: schemas.LeadCreateInput,
 ):
-    lead = await prisma.lead.create(data=lead)
+    data = {
+        "type": lead.type,
+        "apiToken": lead.apiToken,
+        "product": lead.product,
+        "stream": lead.stream,
+        "meta": lead.meta.create.model_dump(),
+        "sales": [x.model_dump() for x in lead.sales.create],
+        "user": lead.user.create.model_dump(),
+        "addressReg": lead.addressReg.create.model_dump(),
+        "addressFact": lead.addressFact.create.model_dump(),
+    }
+    lead = await prisma.lead.create(
+        data=data,
+        include={
+            "meta": True,
+            "sales": True,
+            "user": True,
+            "addressReg": True,
+            "addressFact": True,
+        },
+    )
     return lead
 
 

@@ -1,4 +1,5 @@
 from fastapi import Request
+from loguru import logger
 from prisma.errors import PrismaError
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
@@ -14,11 +15,10 @@ class PrismaErrorMiddleware(BaseHTTPMiddleware):
             err = PrismaErrorResponse(
                 type=e.__class__.__name__,
                 message=str(e),
-                details=self.get_error_details(e)
+                details=self.get_error_details(e),
             )
-            content = {
-                "error": err.model_dump()
-            }
+            content = {"error": err.model_dump()}
+            logger.exception(e)
             return JSONResponse(content=content, status_code=500)
         return response
 
