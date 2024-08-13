@@ -2,6 +2,7 @@ import pathlib
 
 from dotenv import load_dotenv
 from prisma import Prisma
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 load_dotenv(dotenv_path=pathlib.Path(__file__).parent.parent.joinpath(".env"))
@@ -26,11 +27,20 @@ class Settings(BaseSettings):
 
     API_KEYS: list[str]
     SECURE_PATH: str
+
+    model_config = SettingsConfigDict(env_file_encoding="utf-8", extra="allow")
+
     @property
     def db_url(self):
         return f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_DATABASE}"
 
-    model_config = SettingsConfigDict(env_file_encoding="utf-8", extra="allow")
+    @field_validator("API_KEYS", )
+    def validate_api_keys(cls, api_keys):
+        min_length = 32
+        for key in api_keys:
+            if len(key) < min_length:
+                raise ValueError(f"API key '{key}' is shorter than the minimum length of {min_length} characters.")
+        return api_keys
 
 
 settings = Settings()

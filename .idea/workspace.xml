@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add prisma postgresql">
-      <change afterPath="$PROJECT_DIR$/app/api/deps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/middleware.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/schemas.py" afterDir="false" />
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add leads api">
       <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/application.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/seed.py" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seed.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,12 +155,21 @@
       <option name="project" value="LOCAL" />
       <updated>1723539332985</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add leads api">
+      <option name="closed" value="true" />
+      <created>1723542220450</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723542220450</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="add prisma postgresql" />
-    <option name="LAST_COMMIT_MESSAGE" value="add prisma postgresql" />
+    <MESSAGE value="add leads api" />
+    <option name="LAST_COMMIT_MESSAGE" value="add leads api" />
   </component>
 </project>

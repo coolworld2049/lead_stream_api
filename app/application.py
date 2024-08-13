@@ -29,6 +29,7 @@ async def lifespan(app: FastAPI):
 def create_fastapi_app() -> FastAPI:
     configure_logging()
     app = FastAPI(
+        title="Lead Stream Api",
         lifespan=lifespan,
         docs_url=None,
         redoc_url=None,
