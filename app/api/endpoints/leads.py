@@ -1,55 +1,43 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from prisma import models
 from starlette import status
 from starlette.responses import JSONResponse
 
-router = APIRouter(prefix="/leads", tags=["Leads"])
+from app.api.deps import api_key_auth
+from app.settings import prisma
+
+router = APIRouter(prefix="/leads", tags=["Leads"], dependencies=[Depends(api_key_auth)])
 
 
-@router.post("/", response_model=models.Person)
-def create_Lead(
+@router.post("/", response_model=models.Lead)
+async def create_lead(
     lead: models.Lead,
 ):
-    Lead = lead_repo.add(lead)
-    return Lead
+    lead = await prisma.lead.create(data=lead)
+    return lead
 
 
 @router.get("/{id}", response_model=models.Lead)
-def read_Lead(
-    id: int, lead_repo: LeadRepository = Depends(lambda: get_repository(LeadRepository))
-):
-    Lead = lead_repo.get_by_id(id)
-    if Lead is None:
+async def read_lead(id: int):
+    lead = await prisma.lead.find_unique(where={"id": id})
+    if lead is None:
         raise HTTPException(status_code=404, detail="schemas.Lead not found")
-    return Lead
+    return lead
 
 
 @router.get("/", response_model=list[models.Lead])
-def read_Lead_list(
-
-):
-    Leads = lead_repo.list()
-    return Leads
+async def read_lead_list():
+    lead = await prisma.lead.find_many()
+    return lead
 
 
 @router.put("/{id}", response_model=models.Lead)
-def update_Lead(
-    id: int,
-    lead: models.Lead,
-
-):
-    try:
-        updated_Lead = lead_repo.update(lead)
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=",".join(e.args)
-        )
-    return updated_Lead
+async def update_lead(id: int, lead_obj: models.Lead):
+    lead = await prisma.lead.update(data=lead_obj, where={"id": lead_obj.id})
+    return lead
 
 
 @router.delete("/{id}", response_model=models.Lead)
-def delete_Lead(
-    id: int, lead_repo: LeadRepository = Depends(lambda: get_repository(LeadRepository))
-):
-    lead_repo.delete(id)
+async def delete_lead(id: int):
+    lead = await prisma.lead.delete(where={"id": id})
     return JSONResponse(status_code=status.HTTP_200_OK, content="success")

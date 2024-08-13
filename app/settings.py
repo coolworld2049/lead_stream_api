@@ -24,6 +24,8 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str
 
+    API_KEYS: list[str]
+    SECURE_PATH: str
     @property
     def db_url(self):
         return f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_DATABASE}"

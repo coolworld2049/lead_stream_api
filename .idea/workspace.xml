@@ -4,51 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/assets/leadcraft_api.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev/leadcraft.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prisma/schema-1.prisma" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prisma/schema-2.prisma" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prisma/seed.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/prestart.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add prisma postgresql">
+      <change afterPath="$PROJECT_DIR$/app/api/deps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middleware.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/deps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/application.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/lifespan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/orm/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/orm/abstract.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/orm/sql/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/orm/sql/base.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/orm/sql/session.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/repository/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/repository/user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/service/user.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/uow/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/uow/uow.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/nginx/server_block.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gunicorn_conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/gunicorn_conf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prestart.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/alembic_rev.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/seed.py" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seed.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +80,7 @@
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\assets" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.__main__">
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="lead_stream_api" />
       <option name="ENV_FILES" value="" />
@@ -158,8 +124,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
         <item itemvalue="Python.__main__" />
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -187,11 +153,20 @@
       <option name="project" value="LOCAL" />
       <updated>1723490529239</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add prisma postgresql">
+      <option name="closed" value="true" />
+      <created>1723539332985</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723539332985</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="add prisma postgresql" />
+    <option name="LAST_COMMIT_MESSAGE" value="add prisma postgresql" />
   </component>
 </project>
