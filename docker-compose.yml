@@ -1,16 +1,18 @@
 version: "3"
 services:
   lead_stream_api:
-    build: lead_stream_api
+    build: .
     env_file:
       - .env
     environment:
+      HOST: 0.0.0.0
       DB_HOST: postgres
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:${DB_PORT}/${DB_DATABASE}?schema=public
       PRE_START_PATH: /app/scripts/prestart.sh
     depends_on:
       - postgres
     ports:
-      - "8000"
+      - "8000:8000"
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped

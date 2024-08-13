@@ -16,6 +16,12 @@ RUN poetry install --only main --no-interaction --no-ansi -vvv
 
 COPY . .
 
+RUN sed -i 's/\r$//' scripts/*
+
+RUN chmod +x scripts/*
+
+RUN prisma generate
+
 FROM build as app
 
 CMD ["/bin/bash", "./scripts/start.sh"]
