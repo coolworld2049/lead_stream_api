@@ -1,33 +1,25 @@
 version: "3"
 services:
-  app:
+  lead_stream_api:
     build: lead_stream_api
     env_file:
       - .env
     environment:
       DB_HOST: postgres
+      PRE_START_PATH: /app/scripts/prestart.sh
     depends_on:
       - postgres
     ports:
       - "8000"
-  nginx:
-    image: bitnami/nginx:latest
-    restart: always
-    volumes:
-      - ./conf/nginx/server_block.conf:/opt/bitnami/nginx/conf/server_blocks/server_block.conf:ro
-    ports:
-      - "8080:80"
-    depends_on:
-      - app
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
+      - TZ=${DB_TZ:-UTC+3}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DATABASE=${DB_DATABASE}
       - PGPORT=${DB_PORT}
-      - LC_COLLATE=ru_RU.UTF-8
-      - LC_CTYPE=ru_RU.UTF-8
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -35,6 +27,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     restart: unless-stopped
+    profiles:
+      - donotstart
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}

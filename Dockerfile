@@ -14,8 +14,8 @@ COPY pyproject.toml poetry.lock ./
 
 RUN poetry install --only main --no-interaction --no-ansi -vvv
 
-COPY fault_tolerant_online_store .
+COPY . .
 
 FROM build as app
 
-CMD ["/bin/bash", "./start.sh"]
+CMD ["/bin/bash", "./scripts/start.sh"]
