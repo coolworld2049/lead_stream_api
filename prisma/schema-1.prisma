@@ -1,0 +1,166 @@
+generator client {
+  provider                    = "prisma-client-py"
+  enable_experimental_decimal = true
+  interface                   = asyncio
+  partial_type_generator      = "./prisma/partial_types.py"
+  recursive_type_depth        = 2
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  f
+  m
+}
+
+model Lead {
+  id        Int      @id @default(autoincrement())
+  type      String
+  apiToken  String   @db.VarChar(64) // Authentication token
+  product   Int
+  appliedAt DateTime @default(now()) @db.Timestamptz(3)
+  stream    String   @db.VarChar(64) // Stream identifier
+
+  meta   Meta @relation(fields: [metaId], references: [id])
+  metaId Int  @unique
+
+  sales  Sale[]
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+
+  addressReg   Address @relation("AddressReg", fields: [addressRegId], references: [id])
+  addressRegId Int
+
+  addressFact   Address @relation("AddressFact", fields: [addressFactId], references: [id])
+  addressFactId Int
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+}
+
+model Meta {
+  id     Int     @id @default(autoincrement())
+  isTest Boolean @default(false)
+  sub1   String? @db.VarChar(64)
+  sub2   String? @db.VarChar(64)
+  sub3   String? @db.VarChar(64)
+  sub4   String? @db.VarChar(64)
+  sub5   String? @db.VarChar(64)
+  lead   Lead?
+}
+
+model Sale {
+  id         Int    @id @default(autoincrement())
+  campaignID String @db.Uuid // UUID format
+  lead       Lead   @relation(fields: [leadId], references: [id])
+  leadId     Int    @unique
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  firstName  String   @db.VarChar(50)
+  fatherName String   @db.VarChar(50)
+  lastName   String   @db.VarChar(50)
+  birthDate  DateTime @db.Timestamptz(3)
+  birthPlace String?  @db.VarChar(500)
+  gender     Gender
+  phone      String   @db.Char(11)
+  email      String   @db.VarChar(255)
+  ip         String   @db.VarChar(45) // IPv4 or IPv6
+
+  consent        Consent?
+  mailingConsent MailingConsent?
+  codes          IdentificationCodes?
+  leads          Lead[]
+}
+
+model Consent {
+  id       Int      @id @default(autoincrement())
+  status   Boolean
+  datetime DateTime @db.Timestamptz(3)
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int      @unique
+}
+
+model MailingConsent {
+  id       Int      @id @default(autoincrement())
+  status   Boolean
+  datetime DateTime @db.Timestamptz(3)
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int      @unique
+}
+
+model IdentificationCodes {
+  id         Int      @id @default(autoincrement())
+  snils      String   @db.VarChar(12)
+  inn        String   @db.VarChar(12)
+  passport   Passport @relation(fields: [passportId], references: [id])
+  passportId Int      @unique
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+}
+
+model Passport {
+  id         Int      @id @default(autoincrement())
+  seria      String   @db.Char(4)
+  number     String   @db.Char(6)
+  issuer     String   @db.VarChar(255)
+  issuerCode String   @db.VarChar(20)
+  issueDate  DateTime @db.Timestamptz(3)
+
+  identificationCodes IdentificationCodes? @relation
+  CreditIncome        CreditIncome?
+}
+
+model CreditIncome {
+  id         Int      @id @default(autoincrement())
+  salary     Int
+  passport   Passport @relation(fields: [passportId], references: [id])
+  passportId Int      @unique
+}
+
+model Address {
+  id                    Int      @id @default(autoincrement())
+  address               String?  @db.VarChar(500)
+  equalToFact           Boolean
+  country               String   @db.VarChar(60)
+  countryIso            String   @db.Char(2)
+  postalCode            String   @db.VarChar(6)
+  region                String   @db.VarChar(60)
+  regionType            String   @db.VarChar(20)
+  regionFiasId          String   @db.Uuid
+  regionKladrCode       String   @db.Char(13)
+  regionArea            String?  @db.VarChar(60)
+  regionAreaType        String?  @db.VarChar(20)
+  regionAreaFiasId      String?  @db.Uuid
+  regionAreaKladrCode   String?  @db.Char(13)
+  city                  String   @db.VarChar(60)
+  cityType              String   @db.VarChar(20)
+  cityFiasId            String   @db.Uuid
+  cityKladrCode         String   @db.Char(13)
+  cityDistrict          String?  @db.VarChar(60)
+  cityDistrictType      String?  @db.VarChar(20)
+  cityDistrictFiasId    String?  @db.Uuid
+  cityDistrictKladrCode String?  @db.Char(13)
+  settlement            String   @db.VarChar(60)
+  settlementType        String   @db.VarChar(20)
+  settlementFiasId      String   @db.Uuid
+  settlementKladrCode   String   @db.Char(13)
+  street                String   @db.VarChar(60)
+  streetType            String   @db.VarChar(20)
+  streetFiasId          String   @db.Uuid
+  streetKladrCode       String   @db.Char(13)
+  house                 String   @db.VarChar(60)
+  building              String   @db.VarChar(20)
+  block                 String?  @db.VarChar(60)
+  flat                  String?  @db.VarChar(60)
+  flatType              String?  @db.VarChar(20)
+  createdAt             DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt             DateTime @updatedAt @db.Timestamptz(3)
+  leadsReg              Lead[]   @relation("AddressReg")
+  leadsFact             Lead[]   @relation("AddressFact")
+}

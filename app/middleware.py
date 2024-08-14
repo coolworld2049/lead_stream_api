@@ -4,7 +4,7 @@ from prisma.errors import PrismaError
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 
-from app.schemas import PrismaErrorResponse
+from app.schemas import PrismaErrorModel
 
 
 class PrismaErrorMiddleware(BaseHTTPMiddleware):
@@ -12,7 +12,7 @@ class PrismaErrorMiddleware(BaseHTTPMiddleware):
         try:
             response = await call_next(request)
         except PrismaError as e:
-            err = PrismaErrorResponse(
+            err = PrismaErrorModel(
                 type=e.__class__.__name__,
                 message=str(e),
                 details=self.get_error_details(e),

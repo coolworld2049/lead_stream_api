@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     HOST: str = "localhost"
     PORT: int = 8000
     LOG_LEVEL: str = "INFO"
+    IS_DEBUG: bool = False
 
     SQLALCHEMY_ECHO: bool = False
     SQLALCHEMY_DB_POOL_SIZE: int = 100
