@@ -4,6 +4,7 @@ import pathlib
 from io import StringIO, BytesIO
 from multiprocessing.util import get_temp_dir
 
+import aiohttp
 import pandas as pd
 import typing_extensions
 from fastapi import APIRouter, HTTPException, Depends, UploadFile, File
@@ -28,17 +29,45 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=models.Lead)
+@router.post("/", response_model=models.Lead | models.LeadCreateResponse)
 async def create_lead(
     lead: schemas.Lead,
     meta__is_test: bool = Query(
-        False, description="Override lead.meta.is_test. Default value `True`"
+        False,
+        description="Override `lead.meta.is_test`. Default value `True`. "
+                    "Please note that the `lead.api_token` is overwritten when the request is sent",
     ),
 ):
     lead.meta.is_test = meta__is_test
-    lead_create_unput = lead_schema_to_prisma_model(lead)
+    lead.api_token = settings.LEADCRAFT_API_KEY
+    lead_create_input = lead_schema_to_prisma_model(lead)
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(
+            f"{settings.LEADCRAFT_API_URL}/webmasters/lead",
+            json=json.loads(json.dumps(lead_create_input, default=str)),
+            headers={"Content-Type": "application/json"},
+
+        ) as response:
+            response_data = await response.json()
+            if response.status == 200:
+                response_model = schemas.LeadCreateResponse(
+                    id=response_data["id"],
+                    status=response_data["status"],
+                    details=[
+                        schemas.LeadCreateResponseCampaign(
+                            campaignID=k, status=v["status"]
+                        )
+                        for k, v in response_data["details"].items()
+                    ],
+                )
+                return response_data
+            else:
+                raise HTTPException(
+                    status_code=response.status, detail=response_data
+                )
     lead = await prisma.lead.create(
-        data=lead_create_unput,
+        data=lead_create_input,
     )
     return lead
 
@@ -108,7 +137,7 @@ async def download_template(file_ext: schemas.FileExtEnum = Query(...)):
         pathlib.Path(__file__).parent.joinpath("schemas.Lead.json").read_bytes()
     )
     df = pd.json_normalize(data)
-    df['sales'] = df['sales'].apply(lambda x: json.dumps(x, ensure_ascii=False))
+    df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))
     if file_ext.name == "csv":
         df.to_csv(template_file_path, index=False)
     elif file_ext.name == "xlsx":

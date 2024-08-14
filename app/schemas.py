@@ -215,6 +215,16 @@ class Lead(LeadBase, LeadAttributes):
     pass
 
 
+class PrismaFilter(BaseModel):
+    take: Optional[int] = None
+    skip: Optional[int] = None
+    where: Optional[types.LeadWhereInput] = None
+    cursor: Optional[types.LeadWhereUniqueInput] = None
+    include: Optional[types.LeadInclude] = None
+    order: Optional[Union[dict, List[dict]]] = None
+    distinct: Optional[List[types.LeadScalarFieldKeys]] = None
+
+
 class ErrorModel(BaseModel):
     error: str
     details: dict
@@ -236,11 +246,12 @@ class FileExtEnum(str, enum.Enum):
     json = "json"
 
 
-class PrismaFilter(BaseModel):
-    take: Optional[int] = None
-    skip: Optional[int] = None
-    where: Optional[types.LeadWhereInput] = None
-    cursor: Optional[types.LeadWhereUniqueInput] = None
-    include: Optional[types.LeadInclude] = None
-    order: Optional[Union[dict, List[dict]]] = None
-    distinct: Optional[List[types.LeadScalarFieldKeys]] = None
+class LeadCreateResponseCampaign(BaseModel):
+    campaignID: str
+    status: str
+
+
+class LeadCreateResponse(BaseModel):
+    id: int
+    status: str
+    details: list[LeadCreateResponseCampaign]

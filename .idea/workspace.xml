@@ -4,23 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="prisma error">
-      <change afterPath="$PROJECT_DIR$/app/api/endpoints/leads/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/endpoints/leads/schemas.Lead.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prisma/schema-1.prisma" afterDir="false" />
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="main business logic; test with xlsx template">
+      <change afterPath="$PROJECT_DIR$/prisma/schema-2.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/partial_types.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/seed.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +86,7 @@
   "keyToString": {
     "Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.postgres: Compose Deployment.executor": "Run",
-    "Python.__main__.executor": "Debug",
+    "Python.__main__.executor": "Run",
     "Python.convert.executor": "Run",
     "Python.leadcraft.executor": "Run",
     "Python.leads.executor": "Run",
@@ -249,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723569291601</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="main business logic; test with xlsx template">
+      <option name="closed" value="true" />
+      <created>1723601158381</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723601158381</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -270,6 +271,18 @@
     <MESSAGE value="add api key validator" />
     <MESSAGE value="dockerize" />
     <MESSAGE value="prisma error" />
-    <option name="LAST_COMMIT_MESSAGE" value="prisma error" />
+    <MESSAGE value="main business logic; test with xlsx template" />
+    <option name="LAST_COMMIT_MESSAGE" value="main business logic; test with xlsx template" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/api/endpoints/leads/view.py</url>
+          <line>113</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

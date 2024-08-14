@@ -14,20 +14,17 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
     IS_DEBUG: bool = False
 
-    SQLALCHEMY_ECHO: bool = False
-    SQLALCHEMY_DB_POOL_SIZE: int = 100
-    SQLALCHEMY_WEB_CONCURRENCY: int = 2
-
     DB_HOST: str
     DB_PORT: int
     DB_USER: str
     DB_PASSWORD: str
     DB_DATABASE: str
 
-    DATABASE_URL: str
-
     API_KEYS: list[str]
     SECURE_PATH: str
+
+    LEADCRAFT_API_URL: str
+    LEADCRAFT_API_KEY: str
 
     model_config = SettingsConfigDict(env_file_encoding="utf-8", extra="allow")
 

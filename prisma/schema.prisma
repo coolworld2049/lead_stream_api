@@ -11,21 +11,39 @@ datasource db {
 }
 
 model Lead {
-  id              Int      @id @default(autoincrement())
-  type            String   @db.VarChar(255)
-  api_token       String   @db.VarChar(64)
-  product         Int
-  applied_at      DateTime @default(now()) @db.Timestamptz(3)
-  stream          String   @db.VarChar(64)
-  sales           Json[]
-  meta            Json
-  user            Json
-  consent         Json
-  mailing_consent Json
-  codes           Json
-  passport        Json
-  credit          Json
-  income          Json
-  addr_reg        Json
-  addr_fact       Json
+  id                        Int                         @id @default(autoincrement())
+  type                      String                      @db.VarChar(255)
+  api_token                 String                      @db.VarChar(64)
+  product                   Int
+  applied_at                DateTime                    @default(now()) @db.Timestamptz(3)
+  stream                    String                      @db.VarChar(64)
+  sales                     Json[]
+  meta                      Json
+  user                      Json
+  consent                   Json
+  mailing_consent           Json
+  codes                     Json
+  passport                  Json
+  credit                    Json
+  income                    Json
+  addr_reg                  Json
+  addr_fact                 Json
+  leadCreateResponses       LeadCreateResponse[]        // Added relationship field
+}
+
+model LeadCreateResponse {
+  id                         Int                          @id @default(autoincrement())
+  status                     String
+  details                    Json
+  leadId                     Int                          // Foreign key field to Lead
+  lead                       Lead                         @relation(fields: [leadId], references: [id])
+  leadCreateResponseCampaign LeadCreateResponseCampaign[] // Relationship field
+}
+
+model LeadCreateResponseCampaign {
+  id         Int                @id @default(autoincrement())
+  campaignID String
+  status     String
+  responseId Int
+  response   LeadCreateResponse @relation(fields: [responseId], references: [id])
 }
