@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 
 # Replace with your actual API token
-api_token = "KE6gjLLwBerKPuWkqDbG3OszRw9dLCKcNpQnciBwekP9fUWmA87nVoyowUqJ"
+token = "KE6gjLLwBerKPuWkqDbG3OszRw9dLCKcNpQnciBwekP9fUWmA87nVoyowUqJ"
 
 # URL of the API endpoint
 url = "https://api.leadcraft.ru/v1/webmasters/lead"
@@ -10,7 +10,7 @@ url = "https://api.leadcraft.ru/v1/webmasters/lead"
 # Construct the data payload
 data = {
     "type": "lead",
-    "api_token": api_token,
+    "token": token,
     "applied_at": datetime.now().strftime(
         "%Y-%m-%d %H:%M:%S"
     ),  # Current date and time in the required format

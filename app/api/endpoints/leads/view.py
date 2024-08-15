@@ -35,16 +35,16 @@ async def create_lead(
     meta__is_test: bool = Query(
         False,
         description="Override `lead.meta.is_test`. Default value `True`. "
-                    "Please note that the `lead.api_token` is overwritten when the request is sent",
+                    "Please note that the `lead.token` is overwritten when the request is sent",
     ),
 ):
     lead.meta.is_test = meta__is_test
-    lead.api_token = settings.LEADCRAFT_API_KEY
+    lead.token = settings.LEADCRAFT_API_KEY
     lead_create_input = lead_schema_to_prisma_model(lead)
 
     async with aiohttp.ClientSession() as session:
         async with session.post(
-            f"{settings.LEADCRAFT_API_URL}/webmasters/lead",
+            f"{settings.LEADCRAFT_API_URL}/leads/store",
             json=json.loads(json.dumps(lead_create_input, default=str)),
             headers={"Content-Type": "application/json"},
 

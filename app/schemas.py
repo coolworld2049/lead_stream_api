@@ -49,7 +49,7 @@ class User(BaseModel):
     birth_date: datetime = datetime.now().replace(year=datetime.now().year - 18)
     birth_place: str = Field(max_length=500)
     gender: Gender = Gender.m.name
-    phone: int = Field(random.randint(10000000000, 99999999999))
+    phone: int = Field(random.randint(70000000000, 79999999999))
     email: EmailStr
     ip: str = Field(default="127.0.0.1")
 
@@ -191,7 +191,7 @@ class Sales(BaseModel):
 
 class LeadBase(BaseModel):
     type: Literal["lead"] = Field("lead")
-    api_token: str
+    token: str
     product: int = Field(ge=1, le=2)
     applied_at: Optional[datetime] = datetime.now(tz=pytz.UTC)
     stream: str = Field(min_length=2, max_length=64, pattern=alphanumeric_pattern)

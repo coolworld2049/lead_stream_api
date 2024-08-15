@@ -19,7 +19,7 @@
     "birth_date": "2006-08-14T04:39:18.035769",
     "birth_place": "string",
     "gender": "m",
-    "phone": 38174189974,
+    "phone": 78174189974,
     "email": "user@example.com",
     "ip": "127.0.0.1"
   },
@@ -123,7 +123,7 @@
     "equal_to_reg": true
   },
   "type": "lead",
-  "api_token": "string",
+  "token": "string",
   "product": 1,
   "applied_at": "2024-08-14T01:39:18.064027Z",
   "stream": "U3AQ2nQHTKNiKm5kaQ1gUuFOotycpdfPysoAEPKphjQca2JGr65j2HOQYt"

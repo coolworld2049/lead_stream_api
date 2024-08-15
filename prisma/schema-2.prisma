@@ -13,7 +13,7 @@ datasource db {
 model Lead {
   id              Int      @id @default(autoincrement())
   type            String   @db.VarChar(255)
-  api_token       String   @db.VarChar(64)
+  token       String   @db.VarChar(64)
   product         Int
   applied_at      DateTime @default(now()) @db.Timestamptz(3)
   stream          String   @db.VarChar(64)

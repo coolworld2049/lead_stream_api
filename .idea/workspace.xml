@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="main business logic; test with xlsx template">
-      <change afterPath="$PROJECT_DIR$/prisma/schema-2.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add request to leadcraft; need fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/schemas.Lead.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/schemas.Lead.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/leadcraft.py" beforeDir="false" afterPath="$PROJECT_DIR$/dev/leadcraft.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema-2.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema-2.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,25 +79,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.postgres: Compose Deployment.executor": "Run",
-    "Python.__main__.executor": "Run",
-    "Python.convert.executor": "Run",
-    "Python.leadcraft.executor": "Run",
-    "Python.leads.executor": "Run",
-    "Python.partial_types.executor": "Run",
-    "Python.schemas.executor": "Run",
-    "Python.seed.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "simple",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api/prisma",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Python.__main__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.convert.executor&quot;: &quot;Run&quot;,
+    &quot;Python.leadcraft.executor&quot;: &quot;Run&quot;,
+    &quot;Python.leads.executor&quot;: &quot;Run&quot;,
+    &quot;Python.partial_types.executor&quot;: &quot;Run&quot;,
+    &quot;Python.schemas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.seed.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;simple&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/coolw/PycharmProjects/lead_stream_api/prisma&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\prisma" />
@@ -173,8 +170,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.__main__" />
-        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
+        <item itemvalue="Python.__main__" />
+        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -279,7 +278,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/api/endpoints/leads/view.py</url>
-          <line>113</line>
+          <line>115</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
