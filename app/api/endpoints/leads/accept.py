@@ -9,7 +9,7 @@ import typing_extensions
 from fastapi import APIRouter, HTTPException, Depends, UploadFile
 from fastapi.params import Query, File
 from loguru import logger
-from prisma import models, Json, types
+from prisma import Json, types
 from pydantic_core import ValidationError
 from starlette import status
 from starlette.responses import FileResponse
@@ -125,7 +125,7 @@ async def download_file_leads_template(
     return FileResponse(path=template_file_path, filename=template_file_path.name)
 
 
-@router.get("/", response_model=list[models.Lead])
+@router.get("/", response_model=schemas.ResponseDataModel)
 async def read_leads(
     take: Optional[int] = Query(50, description="Number of items to take"),
     skip: Optional[int] = Query(0, description="Number of items to skip"),
@@ -151,6 +151,8 @@ async def read_leads(
         distinct=distinct,
     )
     leads = await prisma.lead.find_many(**filter_params.model_dump(exclude_none=True))
+    if len(leads) < 1:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     if export is not None:
         lead_dict = []
         for item in leads:
@@ -169,4 +171,7 @@ async def read_leads(
         elif export.name == "json":
             df.to_json(template_file_path, index=False, orient="records", indent=2)
         return FileResponse(path=template_file_path, filename=template_file_path.name)
-    return leads
+    return schemas.ResponseDataModel(
+        data=leads,
+        count=len(leads)
+    )

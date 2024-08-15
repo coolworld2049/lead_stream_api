@@ -1,13 +1,18 @@
 import enum
 from typing import Optional, Union, List
 
-from prisma import types
+from prisma import types, models
 from pydantic import BaseModel
 
 
 class ResponseModel(BaseModel):
     status: int
     message: dict | str
+
+
+class ResponseDataModel(BaseModel):
+    data: list[models.Lead | dict]
+    count: int
 
 
 class FileExtEnum(str, enum.Enum):
