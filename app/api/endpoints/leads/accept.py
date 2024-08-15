@@ -1,14 +1,13 @@
-import datetime
 import json
 import pathlib
+from datetime import datetime
 from io import StringIO, BytesIO
 from multiprocessing.util import get_temp_dir
 
-import aiohttp
 import pandas as pd
 import typing_extensions
-from fastapi import APIRouter, HTTPException, Depends, UploadFile, File
-from fastapi.params import Query
+from fastapi import APIRouter, HTTPException, Depends, UploadFile
+from fastapi.params import Query, File
 from loguru import logger
 from prisma import models, Json, types
 from pydantic_core import ValidationError
@@ -18,70 +17,42 @@ from typing_extensions import Optional, List, Union
 
 from app import schemas
 from app.api.deps import api_key_auth
-from app.api.endpoints.leads.crud import lead_schema_to_prisma_model
-from app.api.endpoints.leads.serialize import to_formatted_json
+from app.api.endpoints.leads.serialize import (
+    lead_schema_to_prisma_model,
+    to_formatted_json,
+)
 from app.settings import prisma, settings
 
 router = APIRouter(
-    prefix="/leads",
-    tags=["Leads"],
+    prefix="/leads/incoming",
+    tags=["Accept Leads"],
     dependencies=[Depends(api_key_auth)] if not settings.IS_DEBUG else None,
 )
 
 
-@router.post("/", response_model=models.Lead | models.LeadCreateResponse)
+@router.post(
+    "/", response_model=schemas.ResponseModel, status_code=status.HTTP_201_CREATED
+)
 async def create_lead(
-    lead: schemas.Lead,
-    meta__is_test: bool = Query(
-        False,
-        description="Override `lead.meta.is_test`. Default value `True`. "
-                    "Please note that the `lead.token` is overwritten when the request is sent",
-    ),
+    lead: schemas.AcceptLeadCreate,
 ):
-    lead.meta.is_test = meta__is_test
-    lead.token = settings.LEADCRAFT_API_KEY
     lead_create_input = lead_schema_to_prisma_model(lead)
-
-    async with aiohttp.ClientSession() as session:
-        async with session.post(
-            f"{settings.LEADCRAFT_API_URL}/leads/store",
-            json=json.loads(json.dumps(lead_create_input, default=str)),
-            headers={"Content-Type": "application/json"},
-
-        ) as response:
-            response_data = await response.json()
-            if response.status == 200:
-                response_model = schemas.LeadCreateResponse(
-                    id=response_data["id"],
-                    status=response_data["status"],
-                    details=[
-                        schemas.LeadCreateResponseCampaign(
-                            campaignID=k, status=v["status"]
-                        )
-                        for k, v in response_data["details"].items()
-                    ],
-                )
-                return response_data
-            else:
-                raise HTTPException(
-                    status_code=response.status, detail=response_data
-                )
     lead = await prisma.lead.create(
         data=lead_create_input,
     )
-    return lead
+    return schemas.ResponseModel(
+        status=status.HTTP_200_OK,
+        message="success",
+    )
 
 
-@router.post("/file")
+@router.post("/file", response_model=schemas.ResponseModel, status_code=status.HTTP_201_CREATED)
 async def create_lead_from_file(
     file: UploadFile = File(
         ...,
         description="Upload a file containing lead data. Supported file types are `CSV`, `JSON`, `XLSX`. "
                     "For `CSV` and `XLSX`, the file should be structured with columns matching the lead data attributes. "
                     "For `JSON`, each line should be a valid JSON object representing a lead. Encoding `UTF-8`",
-    ),
-    meta__is_test: bool = Query(
-        False, description="Override lead.meta.is_test. Default value `True`"
     ),
 ):
     # Determine the file type
@@ -111,8 +82,7 @@ async def create_lead_from_file(
     for lead_data in leads:
         try:
             lead_data["sales"] = json.loads(lead_data["sales"])
-            lead = schemas.Lead.model_validate(lead_data, from_attributes=True)
-            lead.meta.is_test = meta__is_test
+            lead = schemas.AcceptLead.model_validate(lead_data, from_attributes=True)
             lead_create_unput = lead_schema_to_prisma_model(lead)
             input_leads_prisma_models.append(lead_create_unput)
         except ValidationError as e:
@@ -127,36 +97,36 @@ async def create_lead_from_file(
     )
 
 
-@router.get("/template", response_class=FileResponse)
-async def download_template(file_ext: schemas.FileExtEnum = Query(...)):
-    date = datetime.datetime.now()
+@router.get("/file/template", response_class=FileResponse)
+async def download_file_leads_template(
+    ext: schemas.FileExtEnum = Query(...), example_row: bool = False
+):
+    date = datetime.now()
     template_file_path = pathlib.Path(
-        f"{get_temp_dir()}/lead_template_{int(date.timestamp())}.{file_ext.name}"
+        f"{get_temp_dir()}/lead_template_{int(date.timestamp())}.{ext.name}"
     )
-    data = json.loads(
-        pathlib.Path(__file__).parent.joinpath("schemas.Lead.json").read_bytes()
-    )
-    df = pd.json_normalize(data)
+    example_lead = await prisma.lead.find_many(take=1)
+    if len(example_lead) < 1:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    df = pd.json_normalize(example_lead[0].model_dump())
+    df["applied_at"] = df["applied_at"].dt.tz_localize(None)
     df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))
-    if file_ext.name == "csv":
-        df.to_csv(template_file_path, index=False)
-    elif file_ext.name == "xlsx":
-        df.to_excel(template_file_path, index=False, sheet_name="Lead")
-    elif file_ext.name == "json":
-        df.to_json(template_file_path, index=False, orient="records", indent=2)
+    df_to_save = (
+        pd.DataFrame(columns=list(df.iloc[0].to_dict().keys()))
+        if not example_row
+        else df
+    )
+    if ext.name == "csv":
+        df_to_save.to_csv(template_file_path, index=False)
+    elif ext.name == "xlsx":
+        df_to_save.to_excel(template_file_path, index=False, sheet_name="Lead")
+    elif ext.name == "json":
+        df_to_save.to_json(template_file_path, index=False, orient="records", indent=2)
     return FileResponse(path=template_file_path, filename=template_file_path.name)
 
 
-@router.get("/{id}", response_model=models.Lead)
-async def read_lead(id: int):
-    lead = await prisma.lead.find_unique(where={"id": id})
-    if lead is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    return lead
-
-
 @router.get("/", response_model=list[models.Lead])
-async def read_lead_list(
+async def read_leads(
     take: Optional[int] = Query(50, description="Number of items to take"),
     skip: Optional[int] = Query(0, description="Number of items to skip"),
     where: Optional[Json] = Query(None, description="Filter criteria"),
@@ -169,6 +139,7 @@ async def read_lead_list(
         None,
         description=f"Distinct fields {typing_extensions.get_args(types.LeadScalarFieldKeys)}",
     ),
+    export: schemas.FileExtEnum | None = Query(None),
 ):
     filter_params = schemas.PrismaFilter(
         take=take,
@@ -179,5 +150,23 @@ async def read_lead_list(
         order=order[0],
         distinct=distinct,
     )
-    lead = await prisma.lead.find_many(**filter_params.model_dump(exclude_none=True))
-    return lead
+    leads = await prisma.lead.find_many(**filter_params.model_dump(exclude_none=True))
+    if export is not None:
+        lead_dict = []
+        for item in leads:
+            item.applied_at = item.applied_at.replace(tzinfo=None)
+            lead_dict.append(item.model_dump())
+        date = datetime.now()
+        template_file_path = pathlib.Path(
+            f"{get_temp_dir()}/lead_template_{int(date.timestamp())}.{export.name}"
+        )
+        df = pd.json_normalize(lead_dict)
+        df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))
+        if export.name == "csv":
+            df.to_csv(template_file_path, index=False)
+        elif export.name == "xlsx":
+            df.to_excel(template_file_path, index=False, sheet_name="Lead")
+        elif export.name == "json":
+            df.to_json(template_file_path, index=False, orient="records", indent=2)
+        return FileResponse(path=template_file_path, filename=template_file_path.name)
+    return leads

@@ -2,10 +2,8 @@ import enum
 import random
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional, List, Union
+from typing import Optional, List
 
-import pytz
-from prisma import types
 from pydantic import BaseModel, EmailStr, Field
 from pydantic import field_validator
 from typing_extensions import Literal
@@ -49,13 +47,13 @@ class User(BaseModel):
     birth_date: datetime = datetime.now().replace(year=datetime.now().year - 18)
     birth_place: str = Field(max_length=500)
     gender: Gender = Gender.m.name
-    phone: int = Field(random.randint(70000000000, 79999999999))
+    phone: int = Field(random.randint(10000000000, 99999999999))
     email: EmailStr
     ip: str = Field(default="127.0.0.1")
 
     @field_validator("birth_date", mode="before")
     def validate_birth_date(cls, v: str):
-        v_datetime = datetime.fromisoformat(str(v))
+        v_datetime = datetime.fromisoformat(str(v)).replace(tzinfo=None)
         today = datetime.now()
         min_date = today.replace(year=today.year - 100)
         max_date = today.replace(year=today.year - 18)
@@ -189,15 +187,14 @@ class Sales(BaseModel):
     campaignID: str
 
 
-class LeadBase(BaseModel):
+class AcceptLeadBase(BaseModel):
     type: Literal["lead"] = Field("lead")
-    token: str
+    api_token: str
     product: int = Field(ge=1, le=2)
-    applied_at: Optional[datetime] = datetime.now(tz=pytz.UTC)
     stream: str = Field(min_length=2, max_length=64, pattern=alphanumeric_pattern)
 
 
-class LeadAttributes(BaseModel):
+class AcceptLeadAttributes(BaseModel):
     sales: List[Sales]
     meta: Meta
     user: User
@@ -211,47 +208,10 @@ class LeadAttributes(BaseModel):
     addr_fact: AddrFact
 
 
-class Lead(LeadBase, LeadAttributes):
+class AcceptLeadCreate(AcceptLeadBase, AcceptLeadAttributes):
     pass
 
 
-class PrismaFilter(BaseModel):
-    take: Optional[int] = None
-    skip: Optional[int] = None
-    where: Optional[types.LeadWhereInput] = None
-    cursor: Optional[types.LeadWhereUniqueInput] = None
-    include: Optional[types.LeadInclude] = None
-    order: Optional[Union[dict, List[dict]]] = None
-    distinct: Optional[List[types.LeadScalarFieldKeys]] = None
-
-
-class ErrorModel(BaseModel):
-    error: str
-    details: dict
-
-
-class PrismaErrorModel(ErrorModel):
-    type: str
-    message: str
-
-
-class ResponseModel(BaseModel):
-    status: int
-    message: dict
-
-
-class FileExtEnum(str, enum.Enum):
-    xlsx = "xlsx"
-    csv = "csv"
-    json = "json"
-
-
-class LeadCreateResponseCampaign(BaseModel):
-    campaignID: str
-    status: str
-
-
-class LeadCreateResponse(BaseModel):
-    id: int
-    status: str
-    details: list[LeadCreateResponseCampaign]
+class AcceptLead(AcceptLeadBase, AcceptLeadAttributes):
+    id: Optional[int] = None
+    applied_at: datetime
