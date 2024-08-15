@@ -23,8 +23,8 @@ class Settings(BaseSettings):
     API_KEYS: list[str]
     SECURE_PATH: str
 
-    LEADCRAFT_API_URL: str
-    LEADCRAFT_API_KEY: str
+    UNICORE_API_URL: str
+    UNICORE_API_KEY: str
 
     model_config = SettingsConfigDict(env_file_encoding="utf-8", extra="allow")
 

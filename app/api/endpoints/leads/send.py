@@ -19,10 +19,10 @@ router = APIRouter(
 async def send_lead_to_unicore_ru(
     lead: schemas.SendLead,
 ):
-    lead.token = settings.LEADCRAFT_API_KEY
+    lead.token = settings.UNICORE_API_KEY
     async with aiohttp.ClientSession() as session:
         async with session.post(
-            f"{settings.LEADCRAFT_API_URL}/leads/store",
+            f"{settings.UNICORE_API_URL}/leads/store",
             data=lead.model_dump_json(),
             headers={"Content-Type": "application/json"},
         ) as response:
