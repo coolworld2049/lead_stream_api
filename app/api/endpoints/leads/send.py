@@ -15,6 +15,7 @@ from starlette.responses import FileResponse
 
 from app import schemas
 from app.api.deps import api_key_auth
+from app.api.endpoints.leads.serialize import to_formatted_json
 from app.settings import settings
 
 router = APIRouter(
@@ -24,7 +25,7 @@ router = APIRouter(
 )
 
 
-async def send_lead_to_unicore(lead: schemas.SendLead):
+async def send_lead_to_unicore(lead: schemas.SendLeadCreate):
     lead.token = settings.UNICORE_API_KEY
     async with aiohttp.ClientSession() as session:
         async with session.post(
@@ -51,7 +52,7 @@ async def send_lead_to_unicore(lead: schemas.SendLead):
     | dict,
 )
 async def send_lead_to_unicore_ru(
-    lead: schemas.SendLead,
+    lead: schemas.SendLeadCreate,
 ):
     result = await send_lead_to_unicore(lead)
     return result
@@ -73,7 +74,6 @@ async def create_send_lead_from_file(
     logger.info(
         f"Received file: {file.filename}, type: {file_extension}, size: {len(file_content)} bytes"
     )
-    media_type = None
     if file_extension == "csv":
         df = pd.read_csv(StringIO(file_content.decode("utf-8")))
     elif file_extension == "xlsx":
@@ -90,15 +90,16 @@ async def create_send_lead_from_file(
     processed_leads = []
     count = 0
     errors = []
-    for i, lead_data in df.iterrows():
+    leads = to_formatted_json(df)
+    for i, lead_data in enumerate(leads):
         try:
             logger.info(i)
-            result = await send_lead_to_unicore(schemas.SendLead(**lead_data.to_dict()))
+            result = await send_lead_to_unicore(schemas.SendLeadCreate(**lead_data))
             count += 1
             processed_leads.append(result.model_dump())
         except ValidationError as e:
             logger.error(e)
-            errors.append(e.errors())
+            errors.append(e.__str__())
     if len(errors) > 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=errors)
     return schemas.ResponseModel(
@@ -113,7 +114,7 @@ async def download_file_send_leads_template(ext: schemas.FileExtEnum = Query(...
     template_file_path = pathlib.Path(
         f"{get_temp_dir()}/send_lead_template_{int(date.timestamp())}.{ext.name}"
     )
-    df_to_save = pd.DataFrame(columns=list(schemas.SendLead.model_fields.keys()))
+    df_to_save = pd.DataFrame(columns=list(schemas.SendLeadCreate.model_fields.keys()))
     media_type = None
     if ext.name == "csv":
         df_to_save.to_csv(template_file_path, index=False)

@@ -36,6 +36,10 @@ class SendLeadOptional(BaseModel):
     )
 
 
+class SendLeadCreate(SendLeadBase, SendLeadOptional):
+    pass
+
+
 class SendLead(SendLeadBase, SendLeadOptional):
     id: int | None = None
 

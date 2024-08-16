@@ -166,7 +166,7 @@ async def read_leads(
             lead_dict.append(item.model_dump())
         date = datetime.now()
         template_file_path = pathlib.Path(
-            f"{get_temp_dir()}/lead_template_{int(date.timestamp())}.{export.name}"
+            f"{get_temp_dir()}/result_{int(date.timestamp())}.{export.name}"
         )
         df = pd.json_normalize(lead_dict)
         df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))

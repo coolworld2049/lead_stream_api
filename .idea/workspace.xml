@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add file upload to send lead">
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="fix xlsx media_type">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/accept.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/accept.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/send.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/send.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/send.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/send.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,7 +322,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723832428565</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="fix xlsx media_type">
+      <option name="closed" value="true" />
+      <created>1723833485644</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1723833485644</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -348,7 +357,8 @@
     <MESSAGE value="upd" />
     <MESSAGE value="add README.md" />
     <MESSAGE value="add file upload to send lead" />
-    <option name="LAST_COMMIT_MESSAGE" value="add file upload to send lead" />
+    <MESSAGE value="fix xlsx media_type" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix xlsx media_type" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
