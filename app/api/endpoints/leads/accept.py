@@ -118,13 +118,17 @@ async def download_file_leads_template(
         if not example_row
         else df
     )
+    media_type = None
     if ext.name == "csv":
         df_to_save.to_csv(template_file_path, index=False)
     elif ext.name == "xlsx":
+        media_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         df_to_save.to_excel(template_file_path, index=False, sheet_name="AcceptLead")
     elif ext.name == "json":
         df_to_save.to_json(template_file_path, index=False, orient="records", indent=2)
-    return FileResponse(path=template_file_path, filename=template_file_path.name)
+    return FileResponse(
+        path=template_file_path, filename=template_file_path.name, media_type=media_type
+    )
 
 
 @router.get("/", response_model=schemas.ResponseDataModel)
@@ -166,11 +170,19 @@ async def read_leads(
         )
         df = pd.json_normalize(lead_dict)
         df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))
+        media_type = None
         if export.name == "csv":
             df.to_csv(template_file_path, index=False)
         elif export.name == "xlsx":
+            media_type = (
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
             df.to_excel(template_file_path, index=False, sheet_name="Lead")
         elif export.name == "json":
             df.to_json(template_file_path, index=False, orient="records", indent=2)
-        return FileResponse(path=template_file_path, filename=template_file_path.name)
+        return FileResponse(
+            path=template_file_path,
+            filename=template_file_path.name,
+            media_type=media_type,
+        )
     return schemas.ResponseDataModel(data=leads, count=len(leads))
