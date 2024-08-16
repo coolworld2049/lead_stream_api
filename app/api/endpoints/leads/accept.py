@@ -18,7 +18,7 @@ from typing_extensions import Optional, List, Union
 from app import schemas
 from app.api.deps import api_key_auth
 from app.api.endpoints.leads.serialize import (
-    lead_schema_to_prisma_model,
+    accept_lead_schema_to_prisma_model,
     to_formatted_json,
 )
 from app.settings import prisma, settings
@@ -36,7 +36,7 @@ router = APIRouter(
 async def create_lead(
     lead: schemas.AcceptLeadCreate,
 ):
-    lead_create_input = lead_schema_to_prisma_model(lead)
+    lead_create_input = accept_lead_schema_to_prisma_model(lead)
     lead = await prisma.lead.create(
         data=lead_create_input,
     )
@@ -46,13 +46,15 @@ async def create_lead(
     )
 
 
-@router.post("/file", response_model=schemas.ResponseModel, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/file", response_model=schemas.ResponseModel, status_code=status.HTTP_201_CREATED
+)
 async def create_lead_from_file(
     file: UploadFile = File(
         ...,
         description="Upload a file containing lead data. Supported file types are `CSV`, `JSON`, `XLSX`. "
-                    "For `CSV` and `XLSX`, the file should be structured with columns matching the lead data attributes. "
-                    "For `JSON`, each line should be a valid JSON object representing a lead. Encoding `UTF-8`",
+        "For `CSV` and `XLSX`, the file should be structured with columns matching the lead data attributes. "
+        "For `JSON`, each line should be a valid JSON object representing a lead. Encoding `UTF-8`",
     ),
 ):
     # Determine the file type
@@ -83,7 +85,7 @@ async def create_lead_from_file(
         try:
             lead_data["sales"] = json.loads(lead_data["sales"])
             lead = schemas.AcceptLead.model_validate(lead_data, from_attributes=True)
-            lead_create_unput = lead_schema_to_prisma_model(lead)
+            lead_create_unput = accept_lead_schema_to_prisma_model(lead)
             input_leads_prisma_models.append(lead_create_unput)
         except ValidationError as e:
             logger.error(e)
@@ -103,7 +105,7 @@ async def download_file_leads_template(
 ):
     date = datetime.now()
     template_file_path = pathlib.Path(
-        f"{get_temp_dir()}/lead_template_{int(date.timestamp())}.{ext.name}"
+        f"{get_temp_dir()}/accept_lead_template_{int(date.timestamp())}.{ext.name}"
     )
     example_lead = await prisma.lead.find_many(take=1)
     if len(example_lead) < 1:
@@ -119,7 +121,7 @@ async def download_file_leads_template(
     if ext.name == "csv":
         df_to_save.to_csv(template_file_path, index=False)
     elif ext.name == "xlsx":
-        df_to_save.to_excel(template_file_path, index=False, sheet_name="Lead")
+        df_to_save.to_excel(template_file_path, index=False, sheet_name="AcceptLead")
     elif ext.name == "json":
         df_to_save.to_json(template_file_path, index=False, orient="records", indent=2)
     return FileResponse(path=template_file_path, filename=template_file_path.name)
@@ -171,7 +173,4 @@ async def read_leads(
         elif export.name == "json":
             df.to_json(template_file_path, index=False, orient="records", indent=2)
         return FileResponse(path=template_file_path, filename=template_file_path.name)
-    return schemas.ResponseDataModel(
-        data=leads,
-        count=len(leads)
-    )
+    return schemas.ResponseDataModel(data=leads, count=len(leads))

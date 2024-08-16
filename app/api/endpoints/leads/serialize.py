@@ -46,7 +46,7 @@ def to_formatted_json(df, sep="."):
     return result
 
 
-def lead_schema_to_prisma_model(
+def accept_lead_schema_to_prisma_model(
     lead: schemas.AcceptLead, update: dict[str, Any] = None
 ):
     dump = lead.model_copy(update=update).model_dump()

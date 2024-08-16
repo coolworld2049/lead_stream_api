@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="upd">
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add README.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/accept.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/accept.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/send.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/send.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,24 +96,24 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api/app/schemas",
+    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api/assets",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\assets" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\schemas" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\api\endpoints\leads" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\prisma" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api" />
-      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\assets\api" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\schemas" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\api\endpoints\leads" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\prisma" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api" />
-      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\scripts" />
     </key>
   </component>
   <component name="RunManager" selected="Python.__main__">
@@ -303,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723827095591</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add README.md">
+      <option name="closed" value="true" />
+      <created>1723829505099</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1723829505099</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -328,7 +339,8 @@
     <MESSAGE value="api work" />
     <MESSAGE value="fix" />
     <MESSAGE value="upd" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd" />
+    <MESSAGE value="add README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="add README.md" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
