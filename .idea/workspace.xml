@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="api work">
-      <change afterPath="$PROJECT_DIR$/app/schemas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/schemas/accept.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/schemas/common.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/schemas/send.py" afterDir="false" />
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="upd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/accept.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,11 +43,11 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="v2" />
-                    <option name="lastUsedInstant" value="1723709663" />
+                    <option name="lastUsedInstant" value="1723718860" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="simple" />
-                    <option name="lastUsedInstant" value="1723569299" />
+                    <option name="lastUsedInstant" value="1723718849" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="master" />
@@ -88,25 +77,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.postgres: Compose Deployment.executor": "Run",
-    "Python.__main__.executor": "Run",
-    "Python.convert.executor": "Run",
-    "Python.leadcraft.executor": "Run",
-    "Python.leads.executor": "Run",
-    "Python.partial_types.executor": "Run",
-    "Python.schemas.executor": "Run",
-    "Python.seed.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "v2",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api/app/schemas",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.pgbackups: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Python.__main__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.convert.executor&quot;: &quot;Run&quot;,
+    &quot;Python.leadcraft.executor&quot;: &quot;Run&quot;,
+    &quot;Python.leads.executor&quot;: &quot;Run&quot;,
+    &quot;Python.partial_types.executor&quot;: &quot;Run&quot;,
+    &quot;Python.schemas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.seed.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;v2&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/coolw/PycharmProjects/lead_stream_api/app/schemas&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\schemas" />
@@ -165,6 +155,19 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml.pgbackups: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="pgbackups" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration name="docker-compose.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -184,7 +187,7 @@
         <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
         <item itemvalue="Python.__main__" />
-        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +271,31 @@
       <option name="project" value="LOCAL" />
       <updated>1723709450059</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fix">
+      <option name="closed" value="true" />
+      <created>1723725682659</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723725682659</updated>
+    </task>
+    <task id="LOCAL-00010" summary="upd">
+      <option name="closed" value="true" />
+      <created>1723726450589</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723726450589</updated>
+    </task>
+    <task id="LOCAL-00011" summary="upd">
+      <option name="closed" value="true" />
+      <created>1723727405640</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1723727405640</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -291,6 +318,8 @@
     <MESSAGE value="prisma error" />
     <MESSAGE value="main business logic; test with xlsx template" />
     <MESSAGE value="api work" />
-    <option name="LAST_COMMIT_MESSAGE" value="api work" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="upd" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd" />
   </component>
 </project>
