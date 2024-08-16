@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="add api key validator">
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="api work">
+      <change afterPath="$PROJECT_DIR$/app/schemas/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/accept.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/common.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/schemas/send.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/crud.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/serialize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/endpoints/leads/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/endpoints/leads/accept.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="simple" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -30,9 +44,38 @@
     &quot;assignee&quot;: &quot;coolworld2049&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="v2" />
+                    <option name="lastUsedInstant" value="1723709663" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="simple" />
+                    <option name="lastUsedInstant" value="1723569299" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1723569298" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/coolworld2049/fault_tolerant_online_store.git&quot;,
+    &quot;url&quot;: &quot;https://github.com/coolworld2049/lead_stream_api&quot;,
     &quot;accountId&quot;: &quot;a15387f1-33ad-436f-bf81-d8c1c9e8b900&quot;
   }
 }</component>
@@ -52,29 +95,35 @@
     "Python.__main__.executor": "Run",
     "Python.convert.executor": "Run",
     "Python.leadcraft.executor": "Run",
+    "Python.leads.executor": "Run",
+    "Python.partial_types.executor": "Run",
+    "Python.schemas.executor": "Run",
     "Python.seed.executor": "Run",
+    "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "v2",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api/prisma",
+    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api/app/schemas",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\schemas" />
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\api\endpoints\leads" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\prisma" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\schemas" />
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app\api\endpoints\leads" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\prisma" />
+      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api" />
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\scripts" />
-      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\app" />
-      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\dev" />
-      <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api\assets" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.lead_stream_api: Compose Deployment">
+  <component name="RunManager" selected="Python.__main__">
     <configuration name="__main__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="lead_stream_api" />
       <option name="ENV_FILES" value="" />
@@ -131,9 +180,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
         <item itemvalue="Python.__main__" />
         <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
+        <item itemvalue="Python.__main__" />
+        <item itemvalue="Docker.docker-compose.yml.lead_stream_api: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -185,14 +236,61 @@
       <option name="project" value="LOCAL" />
       <updated>1723542713243</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="dockerize">
+      <option name="closed" value="true" />
+      <created>1723543649439</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723543649439</updated>
+    </task>
+    <task id="LOCAL-00006" summary="prisma error">
+      <option name="closed" value="true" />
+      <created>1723569291601</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723569291601</updated>
+    </task>
+    <task id="LOCAL-00007" summary="main business logic; test with xlsx template">
+      <option name="closed" value="true" />
+      <created>1723601158381</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723601158381</updated>
+    </task>
+    <task id="LOCAL-00008" summary="api work">
+      <option name="closed" value="true" />
+      <created>1723709450059</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1723709450059</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="add prisma postgresql" />
     <MESSAGE value="add leads api" />
     <MESSAGE value="add api key validator" />
-    <option name="LAST_COMMIT_MESSAGE" value="add api key validator" />
+    <MESSAGE value="dockerize" />
+    <MESSAGE value="prisma error" />
+    <MESSAGE value="main business logic; test with xlsx template" />
+    <MESSAGE value="api work" />
+    <option name="LAST_COMMIT_MESSAGE" value="api work" />
   </component>
 </project>

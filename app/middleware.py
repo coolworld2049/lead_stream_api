@@ -1,9 +1,9 @@
 from fastapi import Request
+from loguru import logger
 from prisma.errors import PrismaError
+from starlette import status
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
-
-from app.schemas import PrismaErrorResponse
 
 
 class PrismaErrorMiddleware(BaseHTTPMiddleware):
@@ -11,15 +11,16 @@ class PrismaErrorMiddleware(BaseHTTPMiddleware):
         try:
             response = await call_next(request)
         except PrismaError as e:
-            err = PrismaErrorResponse(
+            err = dict(
                 type=e.__class__.__name__,
                 message=str(e),
-                details=self.get_error_details(e)
+                details=self.get_error_details(e),
             )
-            content = {
-                "error": err.model_dump()
-            }
-            return JSONResponse(content=content, status_code=500)
+            logger.error(e)
+            return JSONResponse(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                content={"detail": err},
+            )
         return response
 
     @staticmethod
