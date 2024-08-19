@@ -20,39 +20,43 @@ class Gender(str, enum.Enum):
 
 
 class User(BaseModel):
-    first_name: str = Field(
-        ...,
+    first_name: Optional[str] = Field(
+        None,
         min_length=2,
         max_length=50,
         pattern=r"^[А-Яа-яЁё\s]+$",
         description="First name of the person",
         examples=["Иван"],
     )
-    father_name: str = Field(
-        ...,
+    father_name: Optional[str] = Field(
+        None,
         min_length=2,
         max_length=50,
         pattern=r"^[А-Яа-яЁё\s]+$",
         description="Father's name of the person",
         examples=["Иванов"],
     )
-    last_name: str = Field(
-        ...,
+    last_name: Optional[str] = Field(
+        None,
         min_length=2,
         max_length=50,
         pattern=r"^[А-Яа-яЁё\s]+$",
         description="Last name of the person",
         examples=["Иванович"],
     )
-    birth_date: datetime = datetime.now().replace(year=datetime.now().year - 18)
-    birth_place: str = Field(max_length=500)
-    gender: Gender = Gender.m.name
+    birth_date: Optional[datetime] = Field(
+        datetime.now().replace(year=datetime.now().year - 18)
+    )
+    birth_place: Optional[str] = Field(max_length=500)
+    gender: Optional[Gender] = Gender.m.name
     phone: int = Field(random.randint(10000000000, 99999999999))
     email: EmailStr
-    ip: str = Field(default="127.0.0.1")
+    ip: Optional[str] = Field(default="127.0.0.1")
 
     @field_validator("birth_date", mode="before")
     def validate_birth_date(cls, v: str):
+        if not v:
+            return v
         v_datetime = datetime.fromisoformat(str(v)).replace(tzinfo=None)
         today = datetime.now()
         min_date = today.replace(year=today.year - 100)
@@ -63,31 +67,37 @@ class User(BaseModel):
 
     @field_validator("phone", mode="before")
     def validate_phone(cls, v: int):
-        phone_str = str(v)
+        phone_str = int(v).__str__()
         if len(phone_str) != 11:
             raise ValueError("Phone number must be exactly 11 digits long.")
-        return v
+        return int(v)
 
 
 class Consent(BaseModel):
-    status: bool
-    datetime: datetime
+    status: Optional[bool]
+    datetime: Optional[datetime]
+
+
+class MailingConsent(Consent):
+    pass
 
 
 class Codes(BaseModel):
-    snils: str = Field(max_length=12)
-    inn: str = Field(max_length=12)
+    snils: Optional[str] = Field(max_length=12)
+    inn: Optional[str] = Field(max_length=12)
 
 
 class Passport(BaseModel):
-    seria: int = Field(random.randint(1000, 9999))
-    number: int = Field(random.randint(100000, 999999))
-    issuer: str = Field(max_length=255)
-    issuer_code: str = Field(max_length=20)
-    date: datetime
+    seria: Optional[int] = Field(random.randint(1000, 9999))
+    number: Optional[int] = Field(random.randint(100000, 999999))
+    issuer: Optional[str] = Field(max_length=255)
+    issuer_code: Optional[str] = Field(max_length=20)
+    date: Optional[datetime]
 
     @field_validator("seria", mode="before")
     def validate_seria(cls, v: int):
+        if not v:
+            return v
         seria_str = str(v)
         if len(seria_str) != 4:
             raise ValueError("Passport seria must be exactly 4 digits long.")
@@ -95,6 +105,8 @@ class Passport(BaseModel):
 
     @field_validator("number", mode="before")
     def validate_number(cls, v: int):
+        if not v:
+            return v
         number_str = str(v)
         if len(number_str) != 6:
             raise ValueError("Passport number must be exactly 6 digits long.")
@@ -102,52 +114,52 @@ class Passport(BaseModel):
 
 
 class Credit(BaseModel):
-    amount: Decimal = Field(gt=0)
-    term: int = Field(gt=0)
+    amount: Optional[Decimal] = Field(1, gt=0)
+    term: Optional[int] = Field(1, gt=0)
 
 
 class Income(BaseModel):
-    salary: Decimal = Field(gt=0)
+    salary: Optional[Decimal] = Field(1, gt=0)
 
 
 class Address(BaseModel):
     address: Optional[str] = Field(max_length=500)
-    country: str = Field(max_length=60)
-    country_iso: str = Field(min_length=2, max_length=2)
-    postal_code: str = Field(max_length=6)
+    country: Optional[str] = Field(max_length=60)
+    country_iso: Optional[str] = Field(min_length=2, max_length=2)
+    postal_code: Optional[str] = Field(max_length=6)
 
-    region: str = Field(max_length=60, default=None)
-    region_type: str = Field(max_length=20, default=None)
-    region_fias_id: str = Field(max_length=36, default=None)
-    region_kladr_code: int = Field(ge=13, le=13, default=None)
+    region: Optional[str] = Field(max_length=60, default=None)
+    region_type: Optional[str] = Field(max_length=20, default=None)
+    region_fias_id: Optional[str] = Field(max_length=36, default=None)
+    region_kladr_code: Optional[int] = Field(ge=13, le=13, default=None)
 
     region_area: Optional[str] = Field(max_length=60, default=None)
     region_area_type: Optional[str] = Field(max_length=20, default=None)
     region_area_fias_id: Optional[str] = Field(max_length=36, default=None)
     region_area_kladr_code: Optional[int] = Field(ge=13, le=13, default=None)
 
-    city: str = Field(max_length=60, default=None)
-    city_type: str = Field(max_length=20, default=None)
-    city_fias_id: str = Field(max_length=36, default=None)
-    city_kladr_code: int = Field(ge=13, le=13, default=None)
+    city: Optional[str] = Field(max_length=60, default=None)
+    city_type: Optional[str] = Field(max_length=20, default=None)
+    city_fias_id: Optional[str] = Field(max_length=36, default=None)
+    city_kladr_code: Optional[int] = Field(ge=13, le=13, default=None)
 
     city_district: Optional[str] = Field(max_length=60, default=None)
     city_district_fias_id: Optional[str] = Field(max_length=36, default=None)
     city_district_type: Optional[str] = Field(max_length=20, default=None)
     city_district_kladr_code: Optional[int] = Field(ge=13, le=13, default=None)
 
-    settlement: str = Field(max_length=60, default=None)
-    settlement_type: str = Field(max_length=20, default=None)
-    settlement_fias_id: str = Field(max_length=36, default=None)
-    settlement_kladr_code: int = Field(ge=13, le=13, default=None)
+    settlement: Optional[str] = Field(max_length=60, default=None)
+    settlement_type: Optional[str] = Field(max_length=20, default=None)
+    settlement_fias_id: Optional[str] = Field(max_length=36, default=None)
+    settlement_kladr_code: Optional[int] = Field(ge=13, le=13, default=None)
 
-    street: str = Field(max_length=60, default=None)
-    street_type: str = Field(max_length=20, default=None)
-    street_fias_id: str = Field(max_length=36, default=None)
-    street_kladr_code: int = Field(ge=13, le=13, default=None)
+    street: Optional[str] = Field(max_length=60, default=None)
+    street_type: Optional[str] = Field(max_length=20, default=None)
+    street_fias_id: Optional[str] = Field(max_length=36, default=None)
+    street_kladr_code: Optional[int] = Field(ge=13, le=13, default=None)
 
-    house: str = Field(max_length=60, default=None)
-    house_type: str = Field(max_length=20, default=None)
+    house: Optional[str] = Field(max_length=60, default=None)
+    house_type: Optional[str] = Field(max_length=20, default=None)
 
     block: Optional[str] = Field(max_length=60, default=None)
     block_type: Optional[str] = Field(max_length=20, default=None)
@@ -161,11 +173,11 @@ class AddrReg(Address):
 
 
 class AddrFact(Address):
-    equal_to_reg: bool
+    equal_to_reg: Optional[bool]
 
 
 class Meta(BaseModel):
-    is_test: bool = True
+    is_test: Optional[bool] = True
     sub1: Optional[str] = Field(
         None, min_length=2, max_length=64, pattern=alphanumeric_pattern
     )
@@ -195,11 +207,11 @@ class AcceptLeadBase(BaseModel):
 
 
 class AcceptLeadAttributes(BaseModel):
-    sales: List[Sales]
+    sales: List[Sales] = []
     meta: Meta
     user: User
     consent: Consent
-    mailing_consent: Consent
+    mailing_consent: MailingConsent
     codes: Codes
     passport: Passport
     credit: Credit

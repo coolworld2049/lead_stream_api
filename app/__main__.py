@@ -8,4 +8,5 @@ if __name__ == "__main__":
         host=settings.HOST,
         port=settings.PORT,
         factory=True,
+        timeout_keep_alive=360,
     )

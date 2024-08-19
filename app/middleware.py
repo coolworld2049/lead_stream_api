@@ -1,6 +1,7 @@
 from fastapi import Request
 from loguru import logger
 from prisma.errors import PrismaError
+from pydantic_core import ValidationError
 from starlette import status
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
@@ -14,12 +15,29 @@ class PrismaErrorMiddleware(BaseHTTPMiddleware):
             err = dict(
                 type=e.__class__.__name__,
                 message=str(e),
-                details=self.get_error_details(e),
+                detail=self.get_error_details(e),
             )
-            logger.error(e)
+            logger.exception(e)
             return JSONResponse(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                content={"detail": err},
+                content=err,
+            )
+        except ValidationError as ve:
+            logger.exception(ve)
+            return JSONResponse(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                content=ve.json(indent=2, include_url=False),
+            )
+        except Exception as e:
+            err = dict(
+                type=e.__class__.__name__,
+                message=str(e),
+                detail="\n".join([str(x) for x in e.args]),
+            )
+            logger.exception(e)
+            return JSONResponse(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                content=err,
             )
         return response
 

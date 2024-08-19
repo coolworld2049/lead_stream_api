@@ -30,7 +30,7 @@ class InterceptHandler(logging.Handler):
             level = record.levelno
 
         # Find caller from where originated the logged message
-        frame, depth = logging.currentframe(), 2
+        frame, depth = logging.currentframe(), 5
         while frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back  # type: ignore
             depth += 1

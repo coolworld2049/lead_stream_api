@@ -1,6 +1,7 @@
 from typing import Any
 
 import numpy as np  # For handling NaN values
+from loguru import logger
 from prisma import Json, types
 
 from app import schemas
@@ -49,11 +50,14 @@ def to_formatted_json(df, sep="."):
 def accept_lead_schema_to_prisma_model(
     lead: schemas.AcceptLead, update: dict[str, Any] = None
 ):
-    dump = lead.model_copy(update=update).model_dump()
-    attributes = schemas.AcceptLeadAttributes(**dump).model_dump(exclude={"sales"})
-    attributes_json = {k: Json(v) for k, v in attributes.items()}
-    attributes_json.update({"sales": [Json(x.model_dump()) for x in lead.sales]})
-    lead_create_unput = types.LeadCreateInput(
-        **schemas.AcceptLeadBase(**dump).model_dump(), **attributes_json
-    )
-    return lead_create_unput
+    try:
+        dump = lead.model_copy(update=update).model_dump()
+        attributes = schemas.AcceptLeadAttributes(**dump).model_dump(exclude={"sales"})
+        attributes_json = {k: Json(v) for k, v in attributes.items()}
+        attributes_json.update({"sales": [Json(x.model_dump()) for x in lead.sales]})
+        lead_create_unput = types.LeadCreateInput(
+            **schemas.AcceptLeadBase(**dump).model_dump(), **attributes_json
+        )
+        return lead_create_unput
+    except Exception as e:
+        logger.error(e)

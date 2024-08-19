@@ -6,14 +6,16 @@ from multiprocessing.util import get_temp_dir
 
 import pandas as pd
 import typing_extensions
+from caseconverter import snakecase
 from fastapi import APIRouter, HTTPException, Depends, UploadFile
 from fastapi.params import Query, File
 from loguru import logger
 from prisma import Json, types
+from pydantic import BaseModel
 from pydantic_core import ValidationError
 from starlette import status
 from starlette.responses import FileResponse
-from typing_extensions import Optional, List, Union
+from typing_extensions import Optional, List, Union, Type, Iterator
 
 from app import schemas
 from app.api.deps import api_key_auth
@@ -57,7 +59,6 @@ async def create_lead_from_file(
         "For `JSON`, each line should be a valid JSON object representing a lead. Encoding `UTF-8`",
     ),
 ):
-    # Determine the file type
     file_content = await file.read()
     file_extension = file.filename.split(".")[-1].lower()
     logger.info(
@@ -75,16 +76,15 @@ async def create_lead_from_file(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Unsupported file type",
         )
-
     leads = to_formatted_json(df, sep=".")
-
     processed_leads = []
     input_leads = []
     input_leads_prisma_models = []
     for lead_data in leads:
         try:
-            lead_data["sales"] = json.loads(lead_data["sales"])
-            lead = schemas.AcceptLead.model_validate(lead_data, from_attributes=True)
+            sales = lead_data.get("sales")
+            lead_data["sales"] = json.loads(sales) if sales else []
+            lead = schemas.AcceptLeadCreate(**lead_data)
             lead_create_unput = accept_lead_schema_to_prisma_model(lead)
             input_leads_prisma_models.append(lead_create_unput)
         except ValidationError as e:
@@ -100,24 +100,55 @@ async def create_lead_from_file(
 
 
 @router.get("/file/template", response_class=FileResponse)
-async def download_file_leads_template(
+async def download_file_accept_leads_template(
     ext: schemas.FileExtEnum = Query(...), example_row: bool = False
 ):
     date = datetime.now()
     template_file_path = pathlib.Path(
         f"{get_temp_dir()}/accept_lead_template_{int(date.timestamp())}.{ext.name}"
     )
-    example_lead = await prisma.lead.find_many(take=1)
-    if len(example_lead) < 1:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    df = pd.json_normalize(example_lead[0].model_dump())
-    df["applied_at"] = df["applied_at"].dt.tz_localize(None)
-    df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))
-    df_to_save = (
-        pd.DataFrame(columns=list(df.iloc[0].to_dict().keys()))
-        if not example_row
-        else df
+
+    def get_fields_recursively(
+        model: Type[BaseModel], recursive: bool = True
+    ) -> Iterator[str]:
+        for field_name, field_info in model.model_fields.items():
+            if not recursive or not hasattr(
+                field_type_hint := field_info.annotation, "model_fields"
+            ):
+                yield f"{snakecase(model.__name__)}.{field_name}"
+            else:
+                yield from get_fields_recursively(field_type_hint, recursive=True)
+
+    all_fields = list(get_fields_recursively(schemas.AcceptLeadCreate))
+    fields = list(
+        map(
+            lambda c: (
+                c.split(".")[1]
+                if c.split(".")[0] == snakecase(schemas.AcceptLeadCreate.__name__)
+                else c
+            ),
+            [x for x in all_fields],
+        )
     )
+    df_to_save = pd.DataFrame(columns=fields)
+    if example_row:
+        example_lead = await prisma.lead.find_many(take=1)
+        if len(example_lead) < 1:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="There are no leads in the database",
+            )
+        df = pd.json_normalize(example_lead[0].model_dump())
+        df["applied_at"] = df["applied_at"].dt.tz_localize(None)
+        df["user.birth_date"] = (
+            datetime.fromisoformat(df["user.birth_date"].values[0])
+            .replace(tzinfo=None)
+            .__str__()
+        )
+        df["sales"] = df["sales"].apply(lambda x: json.dumps(x, ensure_ascii=False))
+        df_to_save = df
+    else:
+        df_to_save["sales"] = "[]s"
     media_type = None
     if ext.name == "csv":
         df_to_save.to_csv(template_file_path, index=False)

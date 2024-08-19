@@ -1,3 +1,4 @@
+import asyncio
 import json
 import pathlib
 from datetime import datetime
@@ -25,9 +26,10 @@ router = APIRouter(
 )
 
 
-async def send_lead_to_unicore(lead: schemas.SendLeadCreate):
+async def send_lead_to_unicore(lead: schemas.SendLeadCreate, timeout: float = 0.05):
     lead.token = settings.UNICORE_API_KEY
     async with aiohttp.ClientSession() as session:
+        await asyncio.sleep(timeout)
         async with session.post(
             f"{settings.UNICORE_API_URL}/leads/store",
             data=lead.model_dump_json(),
@@ -52,9 +54,9 @@ async def send_lead_to_unicore(lead: schemas.SendLeadCreate):
     | dict,
 )
 async def send_lead_to_unicore_ru(
-    lead: schemas.SendLeadCreate,
+    lead: schemas.SendLeadCreate, timeout: float = Query(0.1, ge=0.1)
 ):
-    result = await send_lead_to_unicore(lead)
+    result = await send_lead_to_unicore(lead, timeout=timeout)
     return result
 
 
@@ -68,6 +70,7 @@ async def create_send_lead_from_file(
         "For `CSV` and `XLSX`, the file should be structured with columns matching the lead data attributes. "
         "For `JSON`, each line should be a valid JSON object representing a lead. Encoding `UTF-8`",
     ),
+    timeout: float = Query(0.1, ge=0.1),
 ):
     file_content = await file.read()
     file_extension = file.filename.split(".")[-1].lower()
@@ -94,7 +97,9 @@ async def create_send_lead_from_file(
     for i, lead_data in enumerate(leads):
         try:
             logger.info(i)
-            result = await send_lead_to_unicore(schemas.SendLeadCreate(**lead_data))
+            result = await send_lead_to_unicore(
+                schemas.SendLeadCreate(**lead_data), timeout=timeout
+            )
             count += 1
             processed_leads.append(result.model_dump())
         except ValidationError as e:
