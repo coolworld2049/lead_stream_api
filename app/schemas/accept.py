@@ -123,10 +123,10 @@ class Income(BaseModel):
 
 
 class Address(BaseModel):
-    address: Optional[str] = Field(max_length=500)
-    country: Optional[str] = Field(max_length=60)
-    country_iso: Optional[str] = Field(min_length=2, max_length=2)
-    postal_code: Optional[str] = Field(max_length=6)
+    address: Optional[str] = Field(max_length=500, default=None)
+    country: Optional[str] = Field(max_length=60, default=None)
+    country_iso: Optional[str] = Field(min_length=2, max_length=2, default=None)
+    postal_code: Optional[str] = Field(max_length=6, default=None)
 
     region: Optional[str] = Field(max_length=60, default=None)
     region_type: Optional[str] = Field(max_length=20, default=None)
