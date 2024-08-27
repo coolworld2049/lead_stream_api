@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="close external postgres port">
+    <list default="true" id="2d06ad2f-3a11-4e97-8c8d-7d57fe860487" name="Changes" comment="upd accept schema">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/accept.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/accept.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,26 +77,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.pgbackups: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.postgres: Compose Deployment.executor": "Run",
-    "Python.__main__.executor": "Debug",
-    "Python.convert.executor": "Run",
-    "Python.leadcraft.executor": "Run",
-    "Python.leads.executor": "Run",
-    "Python.partial_types.executor": "Run",
-    "Python.schemas.executor": "Run",
-    "Python.seed.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/coolw/PycharmProjects/lead_stream_api",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.lead_stream_api: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.pgbackups: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Python.__main__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.convert.executor&quot;: &quot;Run&quot;,
+    &quot;Python.leadcraft.executor&quot;: &quot;Run&quot;,
+    &quot;Python.leads.executor&quot;: &quot;Run&quot;,
+    &quot;Python.partial_types.executor&quot;: &quot;Run&quot;,
+    &quot;Python.schemas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.seed.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/coolw/PycharmProjects/lead_stream_api&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\coolw\PycharmProjects\lead_stream_api" />
@@ -353,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724074202648</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="upd accept schema">
+      <option name="closed" value="true" />
+      <created>1724749507760</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1724749507760</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -384,7 +390,8 @@
     <MESSAGE value="fix error catch" />
     <MESSAGE value="fix templates" />
     <MESSAGE value="close external postgres port" />
-    <option name="LAST_COMMIT_MESSAGE" value="close external postgres port" />
+    <MESSAGE value="upd accept schema" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd accept schema" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

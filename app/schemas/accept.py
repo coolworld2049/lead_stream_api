@@ -47,10 +47,10 @@ class User(BaseModel):
     birth_date: Optional[datetime] = Field(
         datetime.now().replace(year=datetime.now().year - 18)
     )
-    birth_place: Optional[str] = Field(max_length=500)
+    birth_place: Optional[str] = Field(None, max_length=500)
     gender: Optional[Gender] = Gender.m.name
     phone: int = Field(random.randint(10000000000, 99999999999))
-    email: Optional[EmailStr]
+    email: Optional[EmailStr] = Field(None)
     ip: Optional[str] = Field(default="127.0.0.1")
 
     @field_validator("birth_date", mode="before")
