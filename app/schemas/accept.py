@@ -50,7 +50,7 @@ class User(BaseModel):
     birth_place: Optional[str] = Field(max_length=500)
     gender: Optional[Gender] = Gender.m.name
     phone: int = Field(random.randint(10000000000, 99999999999))
-    email: EmailStr
+    email: Optional[EmailStr]
     ip: Optional[str] = Field(default="127.0.0.1")
 
     @field_validator("birth_date", mode="before")
@@ -201,23 +201,22 @@ class Sales(BaseModel):
 
 class AcceptLeadBase(BaseModel):
     type: Literal["lead"] = Field("lead")
-    api_token: str
     product: int = Field(ge=1, le=2)
     stream: str = Field(min_length=2, max_length=64, pattern=alphanumeric_pattern)
 
 
 class AcceptLeadAttributes(BaseModel):
-    sales: List[Sales] = []
-    meta: Meta
     user: User
-    consent: Consent
-    mailing_consent: MailingConsent
-    codes: Codes
-    passport: Passport
-    credit: Credit
-    income: Income
-    addr_reg: AddrReg
-    addr_fact: AddrFact
+    sales: List[Sales] = []
+    meta: Meta | None = None
+    consent: Consent | None = None
+    mailing_consent: MailingConsent | None = None
+    codes: Codes | None = None
+    passport: Passport | None = None
+    credit: Credit | None = None
+    income: Income | None = None
+    addr_reg: AddrReg | None = None
+    addr_fact: AddrFact | None = None
 
 
 class AcceptLeadCreate(AcceptLeadBase, AcceptLeadAttributes):

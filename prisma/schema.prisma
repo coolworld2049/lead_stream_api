@@ -13,19 +13,18 @@ datasource db {
 model Lead {
   id                  Int                  @id @default(autoincrement())
   type                String
-  api_token               String
   product             Int
-  applied_at          DateTime             @default(now())
-  stream              String
-  sales               Json[]
-  meta                Json
   user                Json
-  consent             Json
-  mailing_consent     Json
-  codes               Json
-  passport            Json
-  credit              Json
-  income              Json
-  addr_reg            Json
-  addr_fact           Json
+  stream              String
+  applied_at          DateTime             @default(now())
+  sales               Json[]
+  meta                Json?
+  consent             Json?
+  mailing_consent     Json?
+  codes               Json?
+  passport            Json?
+  credit              Json?
+  income              Json?
+  addr_reg            Json?
+  addr_fact           Json?
 }
